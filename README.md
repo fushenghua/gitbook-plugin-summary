@@ -5,11 +5,12 @@
 
 用calibre做成的二级目录以及gitbook 导出mobi文件，在kindle电子书上，一律会变成一级目录，当文件非常多的时候阅读就不方便了。`gitbook-plugin-summary `就是来解决这个问题的。
 
-前提环境是要安装gitbook ，安装方法[gitbook 环境安装](gitbook-guide.md)
+前提环境是要安装gitbook ，安装方法[GitBook 制作 Kindle 电子书详细教程](gitbook-guide.md)
 
 ## Case
 
 这就是转换的Kindle效果图，**注意是二级目录**：
+
 ![screenshot](/img/screenshot-1.png)
 
 ## Usage
@@ -66,7 +67,7 @@ $ tree .
 - [Reference](2-Reference/0-README.md)
 ```
 
-其中自动创建`0-README.md`是链接到一级文件目录的
+**tips:** 其中自动创建`0-README.md`是链接到一级文件目录的
 
 
 Gitbook 效果图:

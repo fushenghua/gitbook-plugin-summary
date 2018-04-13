@@ -3,9 +3,20 @@
 import argparse
 import os
 import re
+import json
 
 def execute(cmd):
     return os.system(cmd) == 0
+
+def mkdir(dirPath):
+    if not os.path.exists(dirPath):
+        os.makedirs(dirPath)
+        print("mkdir",dirPath) 
+
+def readTitle(dirPath):
+    f = open(dirPath+'/book.json', encoding='utf-8') 
+    book = json.load(f)
+    return book['title']     
 
 def main():
     parser = argparse.ArgumentParser()
@@ -28,35 +39,22 @@ def main():
         print('create summary file:', dir_input, end = ' ')
 
     print('GitBook create start epub:')
-    if execute('gitbook epub {} {}'.format(dir_input,dir_input+'/docs/Android-Learningnotes.epub')):
-        print('GitBook created epub ...:', dir_input, end = ' ')
+    mkdir(dir_input+'/docs')
+    try:
+        title=readTitle(dir_input)
+    except:
+        title ='book'
 
-    if execute('./KindleGen_Mac_i386_v2_9/kindlegen {}/docs/Android-Learningnotes.epub'.format(dir_input)):
+    print (title)    
+    if execute('gitbook epub {} {}'.format(dir_input,dir_input+'/docs/'+title+'.epub')):
+        print('*************************************************************')
+        print('GitBook created epub ...:', dir_input, end = ' ')
+        print('*************************************************************')
+
+    if execute('./KindleGen_Mac_i386_v2_9/kindlegen {}'.format(dir_input+'/docs/'+title+'.epub')):
         print('GitBook convert mobi:', dir_input, end = ' ')
 
-    # if overwrite:
-    #     print('--overwrite', end = ' ')
-    # if append and os.path.exists(os.path.join(dir_input, 'SUMMARY.md')): 
-    #     #append: read former SUMMARY.md
-    #     print('--append', end = ' ')
-    #     global former_summary_list
-    #     with open(os.path.join(dir_input, 'SUMMARY.md')) as f:
-    #         former_summary_list = f.readlines()
-    #         f.close()
-    # print()
-    # output to flie
-    # if (overwrite == False and 
-    #     os.path.exists(os.path.join(dir_input, 'SUMMARY.md'))):
-    #     # overwrite logic
-    #     filename = 'SUMMARY-GitBook-auto-summary.md'
-    # else:
-    #     filename = 'SUMMARY.md'
-    # output = open(os.path.join(dir_input, filename), 'w')
-    # output.write('# Summary\n\n')
-    # output.write('* [README](./README.md)\n')
-    # output_markdown(dir_input, dir_input, output, append)
-    # output.close()
-    # print('GitBook auto summary finished:) ')
+    print('GitBook generated mobi finished:) ')
     return 0
 
 if __name__ == '__main__':

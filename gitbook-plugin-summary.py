@@ -130,12 +130,12 @@ def main():
     dir_input = args.directory
 
     # print information
-    print('GitBook auto summary:', dir_input, end=' ')
+    print('GitBook auto summary:', dir_input)
     if overwrite:
-        print('--overwrite', end=' ')
+        print('--overwrite')
     if append and os.path.exists(os.path.join(dir_input, 'SUMMARY.md')):
         #append: read former SUMMARY.md
-        print('--append', end=' ')
+        print('--append')
         global former_summary_list
         with open(os.path.join(dir_input, 'SUMMARY.md')) as f:
             former_summary_list = f.readlines()
